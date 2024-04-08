@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- Name: Muhammad Naufal 
+     Class: DISM/FT/2A/01
+     P2129004
+     BED CA2 -->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+		SP AIR
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+    <meta
+      name="keywords"
+      content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive"
+    />
+    <meta name="author" content="FREEHTML5.CO" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+	<script src="jquery-3.6.0.min.js"></script>
+    <!-- Import ajax  New ones last 2-->
+
+    <!--
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE
+	DESIGNED & DEVELOPED by FREEHTML5.CO
+
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css" />
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <!-- Superfish -->
+    <link rel="stylesheet" href="css/superfish.css" />
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+    <!-- CS Select -->
+    <link rel="stylesheet" href="css/cs-select.css" />
+    <link rel="stylesheet" href="css/cs-skin-border.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
+	<link rel="stylesheet" href="css/adminFlight.css" />
+
+    <!-- Modernizr JS Flint datetime pick -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+		$(document).ready(function () {
+		  //clear the div posts
+		  //$('#false9').empty()
+
+		  $.ajax({
+			url: `http://localhost:8081/airport`,
+			type: "GET",
+			contentType: "application/json",
+			dataType: "json",
+			success: function (data, textStatus, xhr) {
+			  console.log(data);
+			  if (data != null) {
+				var airportNames = "";
+
+				for (let i = 0; i < data.length; i++) {
+				  //add under the card to append
+				  airportNames += `<option value="${data[i].airportid}">${data[i].name}</option>`;
+				}
+
+				$("#airportName").append(airportNames);
+				$("#airportName2").append(airportNames);
+			  } //end of data != null
+			  else {
+				console.log("No user data retrieved");
+			  } //end of data == null
+			},
+			error: function (xhr, textStatus, err) {
+			  alert("Cannot Find");
+			  //console.log('Error retrieving user information')
+			  console.log(err);
+			},
+		  }); //end of ajax$
+
+		  $('#Submit').click(function(){
+						
+						//retrieve values from the textboxes
+						// const username = $('#username').val();
+						// const email = $('#email').val();
+						// const role = $('#role').val();
+					if ($('#code').val() == '') { 
+						alert('Please enter flightCode')
+
+					}else if ($('#aircraft').val() == ''){
+						alert('Please enter aircraft name')
+
+					}else if (($("#airportName").val() == $("#airportName2").val())){
+						alert('Please choose different Origin and Destination airports')
+
+					}else if ($('#date-start').val() == ''){
+						alert('Please enter embark date')
+
+					}else if ($('#time').val() == ''){
+						alert('Please enter embark time')
+
+					}else if ((Number.isInteger(parseInt($('#timeHR').val())) == false) || ($('#timeHR').val()) == ''){
+						alert('Please enter an integer for timeHR')
+
+					}else if ((Number.isInteger(parseInt($('#timeMin').val())) == false) || ($('#timeMin').val()) == ''){
+						alert('Please enter an integer for timMins')
+
+					}else if (((Number.isInteger(parseInt($('#price').val())) == false) || ($('#price').val()) < 0) || ($('#price').val()) == ''){
+						alert('Please enter an positive integer for price')
+					}else {
+
+						const flightCode = $("#code").val();
+						const aircraft = $("#aircraft").val();
+						const originAirport = $("#airportName").val();
+						const destinationAirport = $("#airportName2").val();
+						const time= $("#time").val();
+						const date= $("#date-start").val();
+						const datetime = `${date} ${time}:00`;
+						const timeHR = $("#timeHR").val();
+						const timeMins = $("#timeMin").val();
+						const price = $("#price").val();
+
+						const data = `{"flightCode":"${flightCode}","aircraft":"${aircraft}","originAirport":"${originAirport}","destinationAirport":"${destinationAirport}","embarkDate":"${datetime}","travelTime":"${timeHR} hours ${timeMins} mins", "price":"${price}"}`;
+						
+						//prepare the data for the request 
+						// const data = `{"username":"${username}","email":"${email}","role":"${role}"}`
+						console.log(data);
+						const token = localStorage.getItem('token'); 
+						//send the request
+						$.ajax({
+							headers: {"authorization":"Bearer "+token},
+							url: "http://localhost:8081/flight/",
+							type: 'POST',
+							data:data,
+							contentType: 'application/json;charset=utf-8',
+							dataType: 'json',
+							success: function(data,testStatus,xhr){
+									console.log('success');	
+								// console.log(JSON.stringify(data))
+								// console.log(testStatus)
+								// console.log(JSON.stringify(xhr))
+								if (data != null && data.success){
+									console.log('data not null')
+									//Update msg spam tag
+									$('#msg').html('Record updated succesful')
+
+								}
+								else {
+									//console.log('null data')
+									$('#msg').html('Record not updated')
+								}	
+								alert('Flight added')	
+							}, 
+							error: function(xhr, testStatus, errorThrown){
+								console.log('error')
+								console.log(JSON.stringify(xhr))
+								console.log(testStatus)
+								console.log(JSON.stringify(errorThrown)) //this can see on webpage fn + f12 go console
+								alert('Duplicate Entry: Airport already exist')
+							}
+						})
+						}
+						return false
+					
+				})
+
+				$("#Logout").click(function() {
+						//clear the storage
+                                    window.localStorage.clear();
+						//redirect to the login page
+                                    window.location.assign("http://localhost:3001/login.html");
+                });
+
+		}); //end of document.ready()
+	  </script>
+
+
+
+
+  </head>
+ <body>
+	<div class="fh5co-hero">
+		<div class="fh5co-overlay">
+			<header id="fh5co-header-section" class="sticky-banner">
+				<div class="container">
+					<div class="nav-header">
+						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+						<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>SP Air</a></h1>
+						<!-- START #fh5co-menu-wrap -->
+						<nav id="fh5co-menu-wrap" role="navigation">
+							<ul class="sf-menu" id="fh5co-primary-menu">
+								<li class = "active"><a href="adminFlight.html">Add Flights</a></li>
+								<li><a href="adminAirport.html">Add Airports</a></li>
+								<li><a href="adminPromotion.html">Add Promotion</a></li>
+								<li><p id="Logout" class ="my-login">Log Out</p></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+		  <div class="desc">
+			  <div class="row">
+
+				  <div class="col-md-10 ">
+					<!-- <a href="index.html" id="main-logo">Travel</a> -->
+					<h1 class = "heading">Add Flight</h1>
+					<div class="back">
+					  <!-- Nav tabs -->
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+						<div role="tabpanel" class="tab-pane active">
+						  <div class="row">
+						  <form class = "">
+							  <div class="col-xxs-12 col-xs-6 mt">
+								  <div class="input-field">
+									<label for="code">FlightCode</label>
+									<input type="text" class="form-control" id="code" placeholder="SPXXXX" required/>
+								  </div>
+							  </div>
+
+							  <div class="col-xxs-12 col-xs-6 mt">
+								  <div class="input-field">
+									<label for="aircraft">Aircraft</label>
+									<input type="text" class="form-control" id="aircraft" required/>
+								  </div>
+							  </div>
+
+
+							  <div class="col-xxs-12 col-xs-6 mt">
+								<div class="input-field">
+								  <label for="from">Origin Airport</label>
+
+								  <select
+									class="form-control"
+									id="airportName"
+									data-placeholder="All"
+									data-minimum-results-for-search="Infinity"
+									name="airport"
+								  >
+
+								  </select>
+								</div>
+							  </div>
+							  <div class="col-xxs-12 col-xs-6 mt">
+								<div class="input-field">
+								  <label for="from">Destination Airport</label>
+								  <!-- <input type="text" class="form-control" id="originAirport" placeholder="Los Angeles, USA"/> -->
+								  <select
+									class="form-control"
+									id="airportName2"
+									data-placeholder="All"
+									data-minimum-results-for-search="Infinity"
+									name="airport"
+								  ></select>
+								</div>
+							  </div>
+							  <div class="col-xxs-12 col-xs-6 mt alternate">
+								<div class="input-field">
+								  <label for="date-start">Embark Date:</label>
+								  <input
+                                      type="text"
+                                      class="form-control"
+                                      id="date-start"
+                                      placeholder="yyyy-mm-dd"
+                                      required
+                                    />
+								</div>
+							  </div>
+							  <div class="col-xxs-12 col-xs-6 mt alternate">
+								<div class="input-field">
+								  <label for="date-start">Embark Time:</label>
+								  <input
+                                      type="time"
+                                      class="form-control"
+                                      id="time"
+                                   
+                                      required
+                                    />
+								</div>
+							  </div>
+							  <div class="col-xxs-12 col-xs-3 mt alternate">
+								<div class="input-field">
+								  <label for="date-end">Travel Time(Hrs)</label>
+								  <input type="text" class="form-control" id="timeHR" placeholder="Hrs" required/>
+								</div>
+							  </div>
+
+							  <div class="col-xs-3 mt alternate">
+								  <div class="input-field">
+									<label for="date-end">Travel Time(Mins)</label>
+									<input type="text" class="form-control" id="timeMin" placeholder="Mins" required/>
+								  </div>
+							  </div>
+
+							  <div class="col-xs-3 mt alternate">
+								  <div class="input-field">
+									  <label for="price">Price</label>
+									  <input type="text" class="form-control" id="price" placeholder="$" required/>
+								  </div>
+							  </div>
+
+							  <div class="col-xs-12">
+								<!-- <input
+								  type="submit"
+								  id="send"
+								  class="btn btn-primary btn-block"
+								  value="Submit"
+								/>  -->
+								<!-- <button type="button" class="btn" id = "send">Submit</button> -->
+								<p><input type="button" id="Submit" value="Submit" /></p>
+							  </div>
+						  </form>
+
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+
+
+				</div>
+			</div>
+
+	</div>
+	<!-- END fh5co-page -->
+  </div>
+  <!-- END fh5co-wrapper -->
+
+ 
+
+    <!-- jQuery -->
+
+    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/sticky.js"></script>
+
+    <!-- Stellar -->
+    <script src="js/jquery.stellar.min.js"></script>
+    <!-- Superfish -->
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.js"></script>
+    <!-- Magnific Popup -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <!-- Date Picker -->
+    <script src="js/bootstrap-datepicker.min.js"></script>
+
+	<!--flatpicker-->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+	<script>
+		config = {
+			enableTime: true,
+			dateFormat: "Y-m-d H:i",
+		}
+		flatpickr("input[type=datetime-local]", config);
+	</script> -->
+
+
+    <!-- CS Select -->
+    <script src="js/classie.js"></script>
+    <script src="js/selectFx.js"></script>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+  </body>
+</html>
+
+
+<!-- const flightCode = $("#code").val();
+            const aircraft = $("#aircraft").val();
+            const originAirport = $("#airportName").val();
+			const destinationAirport = $("#airportName2").val();
+			const date = $("#date&time").val();
+			const timeHR = $("#timeHR").val();
+			const timeMins = $("#timeMin").val();
+			const price = $("#Price").val();
+
+            const data = `{"flightCode":"${flightCode}", "aircraft":"${aircraft}", "originAirport":"${originAirport}", "destinationAirport":"${destinationAirport}", "embarkDate":"${date}", "travelTime":"${timeHR} hours ${timeMins} mins", "price":"${price}"}`; -->
+
+
+
+
+			
+    
+				<!-- <div class="card">
+					
+					<p class="code"> <label>FlightCode: </label>
+						<input type="text" id="code"> </br></p>
+					<p class="aircraft"><label>Aircraft: </label>
+						<input type="text" id="aircraft"> </br></p>
+					<p class="airportName"><label>Origin Airport: </label>
+						<select id="airportName" data-placeholder="All" data-minimum-results-for-search="Infinity" name="airport"></select> </p>
+					<p class="airportName2"><label>Destination Airport: </label>
+						<select  id="airportName2" data-placeholder="All" data-minimum-results-for-search="Infinity" name="airport"></select> </p>
+					<p class="time"><label>Embark Date: </label>
+						<input type="text"  id="date-start" placeholder="yyyy-mm-dd" required/> </br>
+						<input class="form-control" type = "time" id="time" placeholder="time">
+					</p>
+					<p class="timeHR"><label>Travel Time(Hrs)</label>
+						<input type="text"  id="timeHR" placeholder="Hrs" required></p>
+					<p class="timeMin"><label>Travel Time(Hrs)</label>
+						<input type="text"  id="timeMin" placeholder="Hrs" required></p>
+					<p class="price"><label>Price</label>
+						<input type="text"  id="price" placeholder="$" required></p>
+					<p><span id="msg"></span></p>
+					<p><input type="button" id="Submit" value="Submit" /></p>
+					<p><input type="button" id="Logout" value="Log Out" /></p>
+				</div> -->

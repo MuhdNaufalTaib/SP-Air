@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<!-- Name: Muhammad Naufal 
+     Class: DISM/FT/2A/01
+     P2129004
+     BED CA2 -->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>
+      SP AIR
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+    <meta
+      name="keywords"
+      content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive"
+    />
+    <meta name="author" content="FREEHTML5.CO" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Import ajax -->
+
+    <!-- just add the 2 results together 
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE 
+	DESIGNED & DEVELOPED by FREEHTML5.CO
+		
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css" />
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <!-- Superfish -->
+    <link rel="stylesheet" href="css/superfish.css" />
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+    <!-- CS Select -->
+    <link rel="stylesheet" href="css/cs-select.css" />
+    <link rel="stylesheet" href="css/cs-skin-border.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
+
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      $(document).ready(function () {
+        //clear the div posts
+        //$('#false9').empty()
+
+        $.ajax({
+          url: `http://localhost:8081/airport`,
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            console.log(data);
+            if (data != null) {
+              var airportNames = "";
+
+              for (let i = 0; i < data.length; i++) {
+                //add under the card to append
+                airportNames += `<option value="${data[i].airportid}">${data[i].name}</option>`;
+              }
+
+              $("#airportName").append(airportNames);
+              $("#airportName2").append(airportNames);
+            } //end of data != null
+            else {
+              console.log("No user data retrieved");
+            } //end of data == null
+          },
+          error: function (xhr, textStatus, err) {
+            alert("Cannot Find");
+            //console.log('Error retrieving user information')
+            console.log(err);
+          },
+        }); //end of ajax$
+
+        $("#Oneway").click(function () {
+          document.getElementById("date-end").value = "Oneway Flight";
+        });
+
+        $("#transfer").click(function () {
+          document.getElementById("date-end").value = "Transfer Flight";
+        });
+
+        $("#Round").click(function () {
+          if (document.getElementById("date-end").value == "Oneway Flight" || document.getElementById("date-end").value == "Transfer Flight"){
+            document.getElementById("date-end").value = "";
+            document.getElementById("date-start").value = "";
+          }
+        });
+
+        $("#buttons").click(function () {
+          if (document.getElementById("Oneway").checked == true) {
+            var originAirport = $("#airportName").val().trim();
+            var destinationAirport = $("#airportName2").val().trim();
+            var embarkDate = $("#date-start").val().trim();
+            var data = `{"originAirport":"${originAirport}", "destinationAirport":"${destinationAirport}", "embarkDate":"${embarkDate}"}`;
+            console.log(data);
+            //clear the div posts
+            //$('#false9').empty()
+
+            //send a request to get user information from the database
+            $.ajax({
+              url: `http://localhost:8081/flightDirect/${originAirport}/${destinationAirport}/${embarkDate}`,
+              type: "GET",
+              contentType: "application/json",
+              dataType: "json",
+              success: function (data, textStatus, xhr) {
+                console.log(data);
+                if (data != null) {
+                  var postHtml = "";
+                  var airportNames = "";
+
+                  airportNames = `<h1>1. ${data[0].originAirport} to ${data[0].destinationAirport}</h1>`;
+
+                  for (let i = 0; i < data.length; i++) {
+                    //add under the card to append
+                    postHtml += `
+								<div class="card">
+									<div class="card-body">
+										<table class="tab2" >
+											<tr class="row2">
+												<th id = "col1row2">${data[i].originAirport}</th>
+												<th id = "col2row2"><img src="images/new.png" alt="Plane icon" class="rotate_image"></th>
+												<th id = "col3row2">${data[i].destinationAirport}</th>
+												<th id = "col4row2">SP AIR-<span class='notbold'>${data[i].flightCode}</span></th>
+												<th id="col5row2">Price: $<span style="color: goldenrod;">${data[i].price}</span></th>
+											</tr>
+											
+										</table>
+										<button
+										type="button"
+										class="btn btn-primary"
+										data-toggle="modal"
+										data-target="#exampleModal${i}"
+										id = "modalbtn${i}"
+										>
+										More Info
+										</button>
+
+										<!-- Modal -->
+										<div
+										class="modal fade"
+										id="exampleModal${i}"
+										tabindex="-1"
+										role="dialog"
+										aria-labelledby="exampleModalLabel${i}"
+										aria-hidden="true"
+										>
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel${i}">
+												Flight Information
+												</h5>
+												<button
+												type="button"
+												class="close"
+												data-dismiss="modal"
+												aria-label="Close"
+												>
+												<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+                        <div id="tables">
+                          <div class="trs" id = "row1">
+                              <div class="tds">Embark:${data[i].embarkDate.slice(0,10)}</div>
+                          </div>
+                          <div class="trs" id = "row2">
+                              <div class="tds">${data[i].originCountry}</div>
+                              <div class="tds" id="trans">TO</div>
+                              <div class="tds">${data[i].destinationCountry}</div>
+                              <div class="tds">Price:$${data[i].price}</div>
+                            
+                          </div>
+                          <div class="trs" id ='row3'>
+                            <div class="tds">${data[i].originAirport}</div>
+                            <div class="tds">${data[i].travelTime}</div>
+                            <div class="tds">${data[i].destinationAirport}</div>
+                            <div class="tds">${data[i].flightCode}  <br/>${data[i].aircraft}</div>
+                            
+                        </div>
+                      </div>
+												
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">
+												Close
+												</button>
+												
+											</div>
+											</div>
+										</div>
+										</div>
+															</div>
+														</div>
+													`;
+                  }
+                  $("#false9").empty();
+                  $("#false9").append(airportNames);
+                  $("#false9").append(postHtml);
+                } //end of data != null
+                else {
+                  console.log("No user data retrieved");
+                } //end of data == null
+              },
+              error: function (xhr, textStatus, err) {
+                alert("Cannot Find");
+                var errorMsg = "";
+                //console.log('Error retrieving user information')
+                console.log(err);
+                errorMsg = `<p id = "errorMsg">There are no flights found matching your search. Modify your search and try again.</p>`;
+
+                $("#false9").empty();
+                $("#false9").append(errorMsg);
+              },
+            }); //end of ajax
+          } else if (document.getElementById("date-start").value == "") {
+            alert("Please select depart date");
+            $("#false9").empty();
+          } else if (document.getElementById("date-end").value == "") {
+            alert("Please select return date");
+            $("#false9").empty();
+          }else if (document.getElementById("transfer").checked == true) {
+            var originAirport = $("#airportName").val().trim();
+            var destinationAirport = $("#airportName2").val().trim();
+            var embarkDate = $("#date-start").val().trim();
+            var data = `{"originAirport":"${originAirport}", "destinationAirport":"${destinationAirport}", "embarkDate":"${embarkDate}"}`;
+            console.log(data);
+            
+
+            //send a request to get user information from the database
+            $.ajax({
+              url: `http://localhost:8081/transfer/flight/${originAirport}/${destinationAirport}/${embarkDate}`,
+              type: "GET",
+              contentType: "application/json",
+              dataType: "json",
+              success: function (data, textStatus, xhr) {
+                console.log(data);
+                if (data != null) {
+                  var postHtml = "";
+                  var airportNames = "";
+
+                  airportNames = `<h1>1. ${data[0].originAirport} to ${data[0].destinationAirport}</h1>`;
+
+                  for (let i = 0; i < data.length; i++) {
+                    //add under the card to append
+                    postHtml += `
+                    <div class="card">
+              <div class="card-body">
+                <table class="tab2">
+                  <tr class="row4">
+                    <th id="col1row4">${data[i].originAirport}</th>
+                    <th id="col2row4">
+                      <img
+                        src="images/new.png"
+                        alt="pic"
+                        class="rotate_image"
+                      />
+                    </th>
+                    <th id="col3row4">${data[i].transferAirport}</th>
+                    <th id="col4row4"><img src="images/new.png" alt="pic" class="rotate_image"/></th>
+                    <th id="col5row4">${data[i].destinationAirport}</th>
+                    <th id="col6row4">Price:$<span style="color: goldenrod;">${data[i].totalPrice}</span></th>
+                  </tr>
+                </table>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                <!-- Button trigger modal -->
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal${i+1000}"
+				  id = "modalbtn${i+1000}"
+                >
+                  More Info
+                </button>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal${i+1000}"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel${i+1000}"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel${i+1000}">
+                          Flight Information
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+			
+            <div id="tables">
+              <div class="trs" id = "row1">
+                  <div class="tds">Embark:${data[i].embarkDate.slice(0,10)}</div>
+              </div>
+              <div class="trs" id = "row2">
+                  <div class="tds">${data[i].originAirport}</div>
+                  <div class="tds" id="trans">TO</div>
+                  <div class="tds">${data[i].transferAirport}</div>
+                  <div class="tds" id="trans">TO</div>
+                  <div class="tds">${data[i].destinationAirport}t</div>
+                  
+                 
+              </div>
+              <div class="trs" id ='row3'>
+                <div class="tds">${data[i].aircraft1}  <br/>${data[i].aircraft2}</div>
+                <div class="tds">${data[i].flightCode1}  <br/>${data[i].flightCode2}</div>
+                <div class="tds">Price:$${data[i].totalPrice}</div>
+            </div>
+
+            <div class="trs" id ='row4'>
+              
+          </div>
+          </div>
+						
+					  </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          Close
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+													`;
+                  }
+                  $("#false9").empty();
+                  $("#false9").append(airportNames);
+                  $("#false9").append(postHtml);
+                } //end of data != null
+                else {
+                  console.log("No user data retrieved");
+                } //end of data == null
+              },
+              error: function (xhr, textStatus, err) {
+                alert("Cannot Find");
+                var errorMsg = "";
+                //console.log('Error retrieving user information')
+                console.log(err);
+                errorMsg = `<p id = "errorMsg">There are no flights found matching your search. Modify your search and try again.</p>`;
+
+                $("#false9").empty();
+                $("#false9").append(errorMsg);
+              },
+            }); //end of ajax
+          
+          } else if (document.getElementById("Round").checked == true) {
+            ///herreeeeeeeeeeeeeeeeeeeeeeeeee
+            var originAirport = $("#airportName").val().trim();
+            var destinationAirport = $("#airportName2").val().trim();
+            var embarkDate = $("#date-start").val().trim();
+            var departDate = $("#date-end").val().trim();
+            var data = `{"originAirport":"${originAirport}", "destinationAirport":"${destinationAirport}", "embarkDate":"${embarkDate}"}`;
+            console.log(data);
+            //clear the div posts
+            //$('#false9').empty()
+
+            //send a request to get user information from the database
+            $.ajax({
+              url: `http://localhost:8081/flightDirect/${originAirport}/${destinationAirport}/${embarkDate}`,
+              type: "GET",
+              contentType: "application/json",
+              dataType: "json",
+              success: function (data, textStatus, xhr) {
+                console.log(data);
+                if (data != null) {
+                  var postHtml = "";
+                  var airportNames = "";
+
+                  airportNames = `<h1>1. ${data[0].originAirport} to ${data[0].destinationAirport}</h1>`;
+
+                  for (let i = 0; i < data.length; i++) {
+                    //add under the card to append
+                    postHtml += `
+								<div class="card">
+									<div class="card-body">
+										<table class="tab2" >
+											<tr class="row2">
+												<th id = "col1row2">${data[i].originAirport}</th>
+												<th id = "col2row2"><img src="images/new.png" alt="Plane icon" class="rotate_image"></th>
+												<th id = "col3row2">${data[i].destinationAirport}</th>
+												<th id = "col4row2">SP AIR-<span class='notbold'>${data[i].flightCode}</span></th>
+												<th id="col5row2">Price: $<span style="color: goldenrod;">${data[i].price}</span></th>
+											</tr>
+											
+										</table>
+								<button
+								type="button"
+								class="btn btn-primary"
+								data-toggle="modal"
+								data-target="#exampleModal${i}"
+								id = "modalbtn${i}"
+								>
+								More Info
+								</button>
+
+								<!-- Modal -->
+								<div
+								class="modal fade"
+								id="exampleModal${i}"
+								tabindex="-1"
+								role="dialog"
+								aria-labelledby="exampleModalLabel${i}"
+								aria-hidden="true"
+								>
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel${i}">
+										Flight Information
+										</h5>
+										<button
+										type="button"
+										class="close"
+										data-dismiss="modal"
+										aria-label="Close"
+										>
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div id="tables">
+                          <div class="trs" id = "row1">
+                              <div class="tds">Embark:${data[i].embarkDate.slice(0,10)}</div>
+                          </div>
+                          <div class="trs" id = "row2">
+                              <div class="tds">${data[i].originCountry}</div>
+                              <div class="tds" id="trans">TO</div>
+                              <div class="tds">${data[i].destinationCountry}</div>
+                              <div class="tds">Price:$${data[i].price}</div>
+                            
+                          </div>
+                          <div class="trs" id ='row3'>
+                            <div class="tds">${data[i].originAirport}</div>
+                            <div class="tds">${data[i].travelTime}</div>
+                            <div class="tds">${data[i].destinationAirport}</div>
+                            <div class="tds">${data[i].flightCode}  <br/>${data[i].aircraft}</div>
+                            
+                        </div>
+                      </div>
+										
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">
+										Close
+										</button>
+										
+									</div>
+									</div>
+								</div>
+								</div>
+													</div>
+												</div>
+							`;
+                  }
+                  $("#false9").empty();
+                  $("#false9").append(airportNames);
+                  $("#false9").append(postHtml);
+                } //end of data != null
+                else {
+                  console.log("No user data retrieved");
+                } //end of data == null
+              },
+
+              error: function (xhr, textStatus, err) {
+               
+                var errorMsg = "";
+                //console.log('Error retrieving user information')
+                console.log(err);
+                errorMsg = `<p id = "errorMsg">There are no flights found matching your search. Modify your search and try again.</p>`;
+
+                $("#false9").empty();
+                $("#false9").append(errorMsg);
+              },
+            }); //end of ajax
+            $.ajax({
+              url: `http://localhost:8081/flightDirect/${destinationAirport}/${originAirport}/${departDate}`,
+              type: "GET",
+              contentType: "application/json",
+              dataType: "json",
+              success: function (data, textStatus, xhr) {
+                console.log(data);
+                if (data != null) {
+                  var arrivalflight = "";
+                  var airportNames2 = "";
+
+                  airportNames2 = `<h1 id = "heading2">2. ${data[0].originAirport} to ${data[0].destinationAirport} </h1>`;
+
+                  for (let i = 0; i < data.length; i++) {
+                    //add under the card to append
+                    arrivalflight += `
+								<div class="card">
+									<div class="card-body">
+										<table class="tab2" >
+											<tr class="row2">
+												<th id = "col1row2">${data[i].originAirport}</th>
+												<th id = "col2row2"><img src="images/new.png" alt="Plane icon" class="rotate_image"></th>
+												<th id = "col3row2">${data[i].destinationAirport}</th>
+												<th id = "col4row2">SP AIR-<span class='notbold'>${data[i].flightCode}</span></th>
+												<th id="col5row2">Price: $<span style="color: goldenrod;">${data[i].price}</span></th>
+											</tr>
+											
+										</table>
+				<button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal${i+100}"
+				  id = "modalbtn${i+100}"
+                >
+                  More Info
+                </button>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal${i+100}"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel${i+100}"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel${i+100}">
+                          Flight Information
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div id="tables">
+                          <div class="trs" id = "row1">
+                              <div class="tds">Embark:${data[i].embarkDate.slice(0,10)}</div>
+                          </div>
+                          <div class="trs" id = "row2">
+                              <div class="tds">${data[i].originCountry}</div>
+                              <div class="tds" id="trans">TO</div>
+                              <div class="tds">${data[i].destinationCountry}</div>
+                              <div class="tds">Price:$${data[i].price}</div>
+                            
+                          </div>
+                          <div class="trs" id ='row3'>
+                            <div class="tds">${data[i].originAirport}</div>
+                            <div class="tds">${data[i].travelTime}</div>
+                            <div class="tds">${data[i].destinationAirport}</div>
+                            <div class="tds">${data[i].flightCode}  <br/>${data[i].aircraft}</div>
+                            
+                        </div>
+                      </div>
+						
+					  </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          Close
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+									</div>
+								</div>
+							`;
+                  }
+
+                  $("#false9").append(airportNames2);
+                  $("#false9").append(arrivalflight);
+                } //end of data != null
+                else {
+                  console.log("No user data retrieved");
+                } //end of data == null
+              },
+              error: function (xhr, textStatus, err) {
+                alert("Cannot find embark and return flight");
+                var errorMsg = "";
+                //console.log('Error retrieving user information')
+                console.log(err);
+                errorMsg = `<p id = "errorMsg">There are no flights found matching your search. Modify your search and try again.</p>`;
+
+                $("#false9").empty();
+                $("#false9").append(errorMsg);
+              },
+            }); //
+          } else {
+            alert('Please select type of flight')
+          }
+
+          return false;
+        }); //end of Search click event handler
+      }); //end of document.ready()
+    </script>
+  </head>
+  <body>
+    <div id="fh5co-wrapper">
+      <div id="fh5co-page">
+        <header id="fh5co-header-section" class="sticky-banner">
+          <div class="container">
+            <div class="nav-header">
+              <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"
+                ><i></i
+              ></a>
+              <h1 id="fh5co-logo">
+                <a href="index.html"><i class="icon-airplane"></i>SP Air</a>
+              </h1>
+              <!-- START #fh5co-menu-wrap -->
+              <nav id="fh5co-menu-wrap" role="navigation">
+                <ul class="sf-menu" id="fh5co-primary-menu">
+                  <li class="active"><a href="index.html">Home</a></li>
+               
+                  <!-- <li ><a href="flight.html">Flights</a></li> -->
+                  <!-- <li><a href="check.html">Check Flights</a></li> -->
+                  <li><a href="promotion.html">Promotions</a></li>
+                  <!-- <li><a href="blog.html">Blog</a></li> -->
+                  <li>
+                    <a href="login.html" id="login" class="my-login">Log In</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+        <!-- end:header-top -->
+
+        <div class="fh5co-hero">
+          <div class="fh5co-overlay">
+            <div
+              class="fh5co-cover"
+              data-stellar-background-ratio="0.5"
+              style="
+                background-image: url('https://media0.giphy.com/media/l2JdZkNoZOlGrUu6A/giphy.gif?cid=ecf05e47o5w40yjhtp2z4olb09xuelnqsem1n6d3rbzdgwor&rid=giphy.gif&ct=g');
+              "
+            >
+              <!--http://www.simpsonsworld.com/-->
+              <div class="desc">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6 col-md-5">
+                      <!-- <a href="index.html" id="main-logo">Travel</a> -->
+                      <div class="tabulation animate-box">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li role="presentation" class="active">
+                            <a
+                              href="#flights"
+                              aria-controls="flights"
+                              role="tab"
+                              data-toggle="tab"
+                              >Flights</a
+                            >
+                          </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                          <div role="tabpanel" class="tab-pane active">
+                            <div class="row">
+                              <form action="/action_page.php">
+                                <div class="col-xxs-12 col-xs-6 mt">
+                                  <div class="input-field">
+                                    <label for="from">From:</label>
+                                    <!-- <input type="text" class="form-control" id="originAirport" placeholder="Los Angeles, USA"/> -->
+                                    <select
+                                      class="form-control"
+                                      id="airportName"
+                                      data-placeholder="All"
+                                      data-minimum-results-for-search="Infinity"
+                                      name="airport"
+                                    >
+                                      <!-- <option value="1">New York</option>
+													  <option value="2">Lisbon</option>
+													  <option value="3">Stockholm</option> -->
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-6 mt">
+                                  <div class="input-field">
+                                    <label for="from">To:</label>
+                                    <!-- <input type="text" class="form-control" id="originAirport" placeholder="Los Angeles, USA"/> -->
+                                    <select
+                                      class="form-control"
+                                      id="airportName2"
+                                      data-placeholder="All"
+                                      data-minimum-results-for-search="Infinity"
+                                      name="airport"
+                                    ></select>
+                                  </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-6 mt alternate">
+                                  <div class="input-field">
+                                    <label for="date-start">DEPART DATE:</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="date-start"
+                                      placeholder="yyyy-mm-dd"
+                                      required
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-xxs-12 col-xs-6 mt alternate">
+                                  <div class="input-field">
+                                    <label for="date-end">RETURN DATE:</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="date-end"
+                                      placeholder="yyyy-mm-dd"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="choice">
+                                  <label for="round" required
+                                    ><input
+                                      type="radio"
+                                      id="Round"
+                                      name="direction"
+                                      required
+                                    />
+                                    Round</label
+                                  >
+                                  <label for="oneway" required
+                                    ><input
+                                      type="radio"
+                                      id="Oneway"
+                                      name="direction"
+                                      required
+                                    />
+                                    Oneway</label
+                                  >
+                                  <label for="transfer" required
+                                    ><input
+                                      type="radio"
+                                      id="transfer"
+                                      name="direction"
+                                      required
+                                    />
+                                    Transfer</label
+                                  >
+                                  
+                                </div>
+                                <div class="col-xs-12">
+                                  <input
+                                    type="submit"
+                                    id="buttons"
+                                    class="btn btn-primary btn-block"
+                                  />
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h2 class="words">SP AIR WE CARE</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div id="spaces">
+            <p></p>
+          </div>
+
+          <div class="container" id="false9">
+            <!-- <div class="card" style="width: 100%">
+              <div class="card-body">
+                <table class="tab2">
+                 <p id="topRow">Price</p> 
+                  <tr class="row2">
+                    <th id="col1row2">Depart Name</th>
+                    <th id="col2row2">
+                      <img
+                        src="images/new.png"
+                        alt="Free HTML5 Website Template by FreeHTML5.co"
+                        class="rotate_image"
+                      />
+                    </th>
+                    <th id="col3row2">Arrival name</th>
+                    <th id="col4row2">Airlines name</th>
+                    <th id="col5row2">Price:$</span></th>
+                  </tr>
+                </table>
+                <a href="#" class="btn btn-primary">Go somewhere</a> 
+                Button trigger modal 
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+				  id = "modalbtn"
+                >
+                  More Info
+                </button>
+
+               Modal 
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Flight Information
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+					 <div class = "Column1">
+              <p>Close</p>
+              <p>Close</p>
+            </div>
+            <div class = "Column2"></div>
+            <div class = "Column3"></div>
+            <div class = "Column4"></div>
+            <div class = "Column5"></div> 
+            <div id="tables">
+              <div class="trs" id = "row1">
+                  <div class="tds">Embark:</div>
+              </div>
+              <div class="trs" id = "row2">
+                  <div class="tds">DepCount</div>
+                  <div class="tds" id="trans">TO</div>
+                  <div class="tds">ArrCount</div>
+                  <div class="tds">Price:$1000</div>
+                 
+              </div>
+              <div class="trs" id ='row3'>
+                <div class="tds">Depart Name</div>
+                <div class="tds">Flying Time</div>
+                <div class="tds">Arrival Name</div>
+                <div class="tds">Code-Aircraft</div>
+                
+            </div>
+          </div>
+						
+						
+						
+
+						
+						
+						
+					  </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          Close
+                        </button>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <h1 style="text-align:center;">WELCOME TO SP AIR</h1>
+          </div>
+        </div>
+
+        
+  <footer>
+    <div id="footer">
+      <div class="container">
+        <div class="row row-bottom-padded-md">
+          <div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+            <h3>About Travel</h3>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+          </div>
+          <div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+            <h3>SP AIR</h3>
+            <ul>
+              <li><a href="index.html">See flights</a></li>
+              <li><a href="promotion.html">See Promotions</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+            <h3>Be A Member</h3>
+            <ul>
+              <li><a href="login.html">Join Now</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 fh5co-footer-link">
+            <h1>SP AIR WE CARE</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <p class="fh5co-social-icons">
+              <a href="#"><i class="icon-twitter2"></i></a>
+              <a href="#"><i class="icon-facebook2"></i></a>
+              <a href="#"><i class="icon-instagram"></i></a>
+              <a href="#"><i class="icon-dribbble2"></i></a>
+              <a href="#"><i class="icon-youtube"></i></a>
+            </p>
+            <p>Copyright 2016 Free Html5 <a href="#">Module</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+      </div>
+      <!-- END fh5co-page -->
+    </div>
+    <!-- END fh5co-wrapper -->
+
+    <!-- jQuery -->
+
+    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/sticky.js"></script>
+
+    <!-- Stellar -->
+    <script src="js/jquery.stellar.min.js"></script>
+    <!-- Superfish -->
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.js"></script>
+    <!-- Magnific Popup -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <!-- Date Picker -->
+    <script src="js/bootstrap-datepicker.min.js"></script>
+    <!-- CS Select -->
+    <script src="js/classie.js"></script>
+    <script src="js/selectFx.js"></script>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

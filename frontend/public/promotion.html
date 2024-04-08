@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<!-- Name: Muhammad Naufal 
+     Class: DISM/FT/2A/01
+     P2129004
+     BED CA2 -->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SP AIR</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- Import ajax -->
+
+  <!-- 
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE 
+	DESIGNED & DEVELOPED by FREEHTML5.CO
+		
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/promotion.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+	<script>
+		$(document).ready(function () {
+			//clear the div posts
+			//$('#false9').empty()
+
+			$.ajax({
+					url: `http://localhost:8081/promotion`,
+					type: 'GET',
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function (data, textStatus, xhr) {
+						console.log(data)
+						if (data != null) {
+						  
+						  var promotion =""
+
+
+						  for (let i = 0; i < data.length; i++) {
+							//add under the card to append
+							promotion += `
+								<div class="card">
+									
+									<div class="card-header">
+										<div class="discount col-md-3">
+											<p id = "dis">${data[i].discount}% OFF<br></p>
+										</div>
+										<div class=" card-title">
+										<p style="font-size: 22px; color: white; text-align: center;">
+									<strong>${data[i].name}</strong>
+										</p>
+										</div>
+									</div>
+									<div class="card-body">
+										<h6 id="card-subtitle mb-2 text-muted" style="text-align:center">${data[i].startDate.slice(0, 19)} TO ${data[i].endDate.slice(0, 19)}</h6>
+										<p class="card-text" id = "card-text" style="text-align:center">${data[i].description}</p>
+										<a href="login.html" id="card-link">Book Now</a>
+									</div>
+									<div class="card-footer">
+									
+									</div>
+								</div>`;
+							
+
+						}
+
+							$('#this').append(promotion)
+							
+
+						}//end of data != null
+						else {
+							console.log('No user data retrieved')
+						}//end of data == null
+
+
+					},
+					error: function (xhr, textStatus, err) {
+						alert('Cannot Find')
+						//console.log('Error retrieving user information')
+						console.log(err)
+						
+						
+					}
+
+				})//end of ajax$
+
+			
+				
+				
+				return false
+			//end of Search click event handler
+
+			
+
+
+		})//end of document.ready()
+	</script>
+
+	</head>
+	<body>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<!-- <div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb');"> http://www.simpsonsworld.com/ -->
+
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>SP Air</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li ><a href="index.html">Home</a></li>
+               
+							<!-- <li ><a href="flight.html">Flights</a></li> -->
+							<!-- <li><a href="check.html">Check Flights</a></li> -->
+							<li class="active"><a href="promotion.html">Promotions</a></li>
+							<!-- <li><a href="blog.html">Blog</a></li> -->
+							<li>
+							  <a href="login.html" id="login" class="my-login">Log In</a>
+							</li>
+							
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+	
+		
+			
+				<h1 class="title">Promotions</h1>
+				<!-- <div class="desc">
+					<div class="card ">
+						<div class="discount col-md-3">
+							<p id = "dis">20% OFF<br></p>
+						</div>
+						<div class="card-body">
+						  <h3 id="card-title" style="text-align:center">Name</h3>
+						  <h6 id="card-subtitle mb-2 text-muted" >Start-end</h6>
+						  <p class="card-text" id = "card-text" style="text-align:center">There would be a 20% discount due to it being the holiday</p>
+						  <a href="login.html" id="card-link">Book Now</a>
+						</div>
+					</div>
+					
+					
+				</div> -->
+
+
+				<div class="container">
+					<div class="row">
+					  <div class="col-sm-4 mb-4">
+						<input type="text" id="myFilter" class="form-control" onkeyup="myFunction()" placeholder="Search for Promotion">
+					  </div>
+					</div>
+				  
+					<div class="row" id="myProducts">
+				  
+					  <div class="col-md-4" id = "this">
+					
+					  </div>
+					  <!-- /transparent header, white footer -->
+					</div>
+				  </div>
+			</div>
+		</div>
+
+		
+		
+
+
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row row-bottom-padded-md">
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>About Travel</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>SP AIR</h3>
+							<ul>
+								<li><a href="index.html">See flights</a></li>
+								<li><a href="promotion.html">See Promotions</a></li>
+							</ul>
+						</div>
+		
+						<div class="col-md-2 col-sm-2 col-xs-12 fh5co-footer-link">
+							<h3>Be A Member</h3>
+							<ul>
+								<li><a href="login.html">Join Now</a></li>
+							</ul>
+						</div>
+
+						<div class="col-md-4 fh5co-footer-link">
+							<h1>SP AIR WE CARE</h1>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p>Copyright 2016 Free Html5 <a href="#">Module</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+	
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	<script>
+		function myFunction() {
+			var input, filter, cards, cardContainer, title, i;
+			input = document.getElementById("myFilter");
+			filter = input.value.toUpperCase();
+			cardContainer = document.getElementById("myProducts");
+			cards = cardContainer.getElementsByClassName("card");
+			for (i = 0; i < cards.length; i++) {
+				title = cards[i].querySelector(".card-title");
+				if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+				cards[i].style.display = "";
+				} else {
+				cards[i].style.display = "none";
+				}
+			}
+		}
+	</script>
+
+	</body>
+</html>
+

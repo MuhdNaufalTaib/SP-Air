@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<!-- Name: Muhammad Naufal 
+     Class: DISM/FT/2A/01
+     P2129004
+     BED CA2 -->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SP AIR</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+	<!-- ADD AJAX -->
+
+  <!-- 
+	//////////////////////////////////////////////////////
+
+	FREE HTML5 TEMPLATE 
+	DESIGNED & DEVELOPED by FREEHTML5.CO
+		
+	Website: 		http://freehtml5.co/
+	Email: 			info@freehtml5.co
+	Twitter: 		http://twitter.com/fh5co
+	Facebook: 		https://www.facebook.com/fh5co
+
+	//////////////////////////////////////////////////////
+	 -->
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+	<!-- CS Select -->
+	<link rel="stylesheet" href="css/cs-select.css">
+	<link rel="stylesheet" href="css/cs-skin-border.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/updateProfile.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	<script>
+		$(document).ready(function(){
+			$('#Update').click(function(){
+				alert('Button clicked')
+				//retrieve values from the textboxes
+				const username = $('#username').val();
+				const email = $('#email').val();
+	
+				const contact = $('#contact').val();
+				const img = $('#img').val();
+				
+				//prepare the data for the request 
+				const data = `{"username":"${username}", "email":"${email}", "contact":"${contact}", "profile_pic_url":"${img}"}`
+				console.log(data);
+				const token = localStorage.getItem('token'); 
+				// localStorage.setItem('userInfo',data)
+				//send the request
+				$.ajax({
+					headers: {"authorization":"Bearer "+token},
+					url: "http://localhost:8081/user",
+					type: 'PUT',
+					data:data,
+					contentType: 'application/json;charset=utf-8',
+					dataType: 'json',
+					success: function(data,testStatus,xhr){
+							console.log('success');	
+						// console.log(JSON.stringify(data))
+						// console.log(testStatus)
+						// console.log(JSON.stringify(xhr))
+						if (data != null && data.success){
+							console.log('data not null')
+							//Update msg spam tag
+							$('#msg').html('Record updated succesful')
+
+						}
+						else {
+							//console.log('null data')
+							$('#msg').html('Record not updated')
+						}		
+					}, 
+					error: function(xhr, testStatus, errorThrown){
+						console.log('error')
+						console.log(JSON.stringify(xhr))
+						console.log(testStatus)
+						console.log(JSON.stringify(errorThrown)) //this can see on webpage fn + f12 go console
+						
+					}
+				})
+				return false
+			})
+				$("#Logout").click(function() {
+				//clear the storage
+							window.localStorage.clear();
+				//redirect to the login page
+							window.location.assign("http://localhost:3001/login.html");
+			});
+		})
+		
+	   
+
+	</script> 
+
+	</head>
+	<body>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html"><i class="icon-airplane"></i>SP Air</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+			
+			
+							<!-- <li><a href="registeredPromotion.html">Promotions</a></li> -->
+							<li class="active"><a href="updateProfile.html">Update Profile</a></li>
+							<li><a href="profile.html">Profile</a></li>
+							
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<!-- end:header-top -->
+	
+	
+		<div class="card">
+			
+			<p class="username"> <label>Username: </label>
+				<input type="text" id="username"> </br></p>
+			<p class="email"><label>Email: </label>
+				<input type="text" id="email"> </p>	
+			<p class="contact"><label>Contact: </label>
+				<input type="text" id="contact"> </p>
+			<p class="img"><label>Profile Pic: </label>
+					<input type="text" id="img"> </p>
+			<p><span id="msg"></span></p>
+			
+			<p><input type="button" id="Update" value="Update Profile" /></p>
+			
+	</div>
+
+
+
+
+	<script>
+		var userData = localStorage.getItem('userInfo'); 
+		var userJsonData = JSON.parse(userData);
+		var username = userJsonData[0].username; 
+		var useremail = userJsonData[0].email; 
+		var userrole = userJsonData[0].role; 
+		var contact = userJsonData[0].contact; 
+		var userpic = userJsonData[0].profile_pic_url; 
+		document.getElementById("username").value = username; 
+		document.getElementById("email").value = useremail; 
+		document.getElementById("email").readOnly = true; 
+		// document.getElementById("role").value = userrole;
+		document.getElementById("contact").value = contact; 
+		document.getElementById("img").value= userpic; 
+	</script>
+
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/sticky.js"></script>
+
+	<!-- Stellar -->
+	<script src="js/jquery.stellar.min.js"></script>
+	<!-- Superfish -->
+	<script src="js/hoverIntent.js"></script>
+	<script src="js/superfish.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Date Picker -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
+	<!-- CS Select -->
+	<script src="js/classie.js"></script>
+	<script src="js/selectFx.js"></script>
+	
+	<!-- Main JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+
