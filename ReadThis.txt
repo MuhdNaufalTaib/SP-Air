@@ -1,0 +1,11 @@
+// Project: SP Air
+// Name: Muhammad Naufal
+
+Step 1) Download the file [SP Air]
+Step 2) Open the SP Air folder in VS Code to be able to see the different codes and 2 Main folders ExpressServer and frontend
+Step 3) Place the SP Air.sql into mysql workbench and run the code by click the lightning symbol. This would create the sql scripts with the information.
+Step 4) Start running the server by adding 2 command prompts and opening it in the terminal.
+Step 5) Cd to ExpressServer and frontend in each terminal and then run "nodemon server.js".
+Step 6) After running nodemon on both severs, you can go to your web browser and search http://localhost:3001/login.html.
+Step 7) Now you can use the website and enjoy
+ 
