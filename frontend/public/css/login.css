@@ -1,0 +1,15 @@
+.login-place{
+    margin-left: 350px;
+    height: 500px;
+    width: 500px;
+}
+
+#login-button {
+    margin-top: 10px;
+    height: 63px;
+}
+
+
+#pwd {
+    margin-top: 5px;
+}

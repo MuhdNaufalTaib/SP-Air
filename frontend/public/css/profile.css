@@ -1,0 +1,108 @@
+#profilepic {
+    margin-left: 40px;
+    margin-top: 65px;
+    
+     
+}
+
+#Logout{
+  background-color: rgb(99, 39, 120);
+  border-radius: 35px;
+  color: white;
+  height:50px;
+  width:100px;
+}
+
+
+#wholeProfile{
+  background-color: white;
+  
+}
+
+p {
+  float: right;
+  margin-top: 1px;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.mail {
+  margin-left: 40%;
+  margin-right: 40%;
+  color: #682773
+}
+/* This is the profile pic setting for picture */
+#profilepict{  
+  border-radius: 50%;
+  width : 300px;
+  height :300px;
+
+}
+
+
+.row {
+  color: white;
+}
+
+#profileinfo {
+  margin-left: 25%;
+  
+}
+
+#profile{
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 35px;
+  color: black;
+  margin-left: 100px;
+}
+
+.info {
+  position: absolute;
+  right: 10px;  
+  width: auto;
+  height: auto;
+  border: 3px solid green;
+}
+
+
+body {
+  background: rgb(99, 39, 120)
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #BA68C8
+}
+
+.profile-button {
+  background: rgb(99, 39, 120);
+  box-shadow: none;
+  border: none
+}
+
+.profile-button:hover {
+  background: #682773
+}
+
+.profile-button:focus {
+  background: #682773;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #682773;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #682773;
+  cursor: pointer
+}
+/* change font here */
+.labels { 
+  font-size: 21px;
+  padding: 5px;
+  color: black;
+}
+

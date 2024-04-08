@@ -1,0 +1,141 @@
+
+#tables {
+    display: table;
+    padding: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.trs {
+    display: table-row;
+    padding: 5px;
+}
+.tds {
+    display: table-cell;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 185px;
+    margin: 5px;
+    
+    
+}
+
+
+
+
+.card {
+    
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px #888888;
+  margin-bottom: 30px;
+}
+
+
+
+
+
+#row1 {
+    font-size: 12px;
+    font-weight: bold;
+    
+}
+
+#row2{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#row3 {
+    font-size: 15px;
+}
+
+
+#errorMsg{
+    padding-left: 25%;
+}
+
+
+
+
+
+#col2row2{
+    
+    padding-left: 120px;
+    
+}
+
+#col3row2{
+    padding-left: 120px;
+}
+
+#col4row2{
+    padding-left: 120px;
+    
+}
+
+#col5row2{
+    padding-left: 150px;
+}
+
+
+/* Row 4 is for transfer flight */
+
+#row4{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#col2row4{
+    
+    padding-left: 120px;
+    
+}
+
+#col3row4{
+    padding-left: 120px;
+}
+
+#col4row4{
+    padding-left: 120px;
+    
+}
+
+#col5row4{
+    padding-left: 150px;
+}
+
+#col6row4{
+    padding-left: 60px;
+}
+
+#modalbtn {
+    margin-top: 10px;
+
+}
+
+#topRow {
+    
+    padding-left: 400px;
+}
+
+.rotate_image{
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    height: 60px;
+    width: 60px;
+    
+}
+
+.choice {
+    padding-left: 15px;
+}
+
+.notbold {
+    font-weight: normal;
+}
+
+.modal-body {
+    width: auto;
+}
