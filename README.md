@@ -2,7 +2,7 @@
 
 Welcome to SP Air, your one-stop destination for booking flights and managing your travel itinerary. SP Air is a comprehensive flight booking website that combines a user-friendly front-end interface with a robust back-end system
 
-![Uploading yes.png…]()
+![yes](https://github.com/MuhdNaufalTaib/SP-Air/assets/166147477/96ed6790-1c45-423d-814f-00b031979167)
 
 ## Overview
 
@@ -31,7 +31,7 @@ SP Air offers a wide range of features to make your flight searching process eff
 ### Backend:
 - Express
 - SQL
-- RESTful APIs
+- APIs
 
 ## Installation
 
