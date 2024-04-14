@@ -1,38 +1,34 @@
 # SP Air - Flight Booking Website
 
-Welcome to SP Air, your one-stop destination for booking flights and managing your travel itinerary. SP Air is a comprehensive flight booking website that combines a user-friendly front-end interface with a robust back-end system to provide a seamless booking experience.
+Welcome to SP Air, your one-stop destination for booking flights and managing your travel itinerary. SP Air is a comprehensive flight booking website that combines a user-friendly front-end interface with a robust back-end system
 
 ## Overview
 
-SP Air offers a wide range of features to make your flight booking process efficient and hassle-free. From searching for flights to making secure payments, our website ensures that you can plan your travel with ease.
+SP Air offers a wide range of features to make your flight searching process efficient and hassle-free
 
 ## Features
 
-### Frontend Features:
-- **User Authentication**: Register an account or log in securely to access personalized features.
-- **Flight Search**: Search for flights based on your preferred dates, destinations, and other criteria.
-- **Booking Management**: View and manage your flight bookings, including itinerary details and payment status.
-- **User Profile**: Update your personal information, preferences, and saved payment methods.
-- **Responsive Design**: Enjoy a seamless browsing experience on desktop, tablet, and mobile devices.
+### Frontend Features
+- **User Authentication**: Log in to a customer or admin account securely to access personalized features
+- **Flight Search**: Search for flights based on your preferred dates, destinations and other criteria
+- **Booking Management**: View and manage flight and airport details
+- **User Profile**: Update your personal information
+- **Responsive Design**: Enjoy a seamless browsing experience on desktop, tablet, and mobile devices
 
 ### Backend Features:
-- **Database Management**: Store and retrieve user data, flight information, and booking details from a secure database.
-- **Payment Processing**: Handle secure online payments using industry-standard encryption and payment gateways.
-- **API Integration**: Connect with external APIs to retrieve real-time flight data, such as availability and pricing.
-- **Authentication and Authorization**: Implement user authentication and authorization to ensure data security and privacy.
+- **Database Management**: Store and retrieve user data, flight information, and booking details from a secure database
+- **Authentication and Authorization**: Implement user authentication and authorization to ensure data security and privacy
 
 ## Technologies Used
 
 ### Frontend:
-- HTML5
-- CSS3 (with Flexbox/Grid for layout)
-- JavaScript (ES6+)
-- React.js (or other frontend frameworks/libraries)
-
+- HTML
+- CSS 
+- JavaScript 
+- Bootstrao
 ### Backend:
-- Node.js (or other backend runtime environments)
-- Express.js (or other web frameworks)
-- MongoDB (or other databases)
+- Express
+- SQL
 - RESTful APIs
 
 ## Installation
@@ -45,10 +41,15 @@ SP Air offers a wide range of features to make your flight booking process effic
 
 ## Getting Started
 
-To explore the Union Football Academy website:
+To explore SP Air:
 
-1. Go to the **html** folder
-2. Go to any of the html pages to start exploring the website
+1. Download the file [SP Air]
+2. Open the SP Air folder in VS Code to be able to see the different codes and 2 Main folders ExpressServer and frontend
+3. Place the SP Air.sql into mysql workbench and run the code by click the lightning symbol. This would create the sql scripts with the information.
+4. Start running the server by adding 2 command prompts and opening it in the terminal.
+5. Cd to ExpressServer and frontend in each terminal and then run "nodemon server.js".
+6. After running nodemon on both severs, you can go to your web browser and search http://localhost:3001/login.html.
+7. Now you can use the website and enjoy
 
 ## Contributing
 I welcome contributions from the community! If you find a bug or want to add a new feature, please open an issue or submit a pull request
