@@ -1,4 +1,4 @@
-# SP Air - Flight Booking Website
+# SP Air - Flight Viewing Website
 
 Welcome to SP Air, your one-stop destination for booking flights and managing your travel itinerary. SP Air is a comprehensive flight booking website that combines a user-friendly front-end interface with a robust back-end system
 
